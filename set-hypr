@@ -120,37 +120,37 @@ if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
 fi
 
 #### Check for package manager ####
-ISYAY=/sbin/yay
-if [ -f "$ISYAY" ]; then 
-    echo -e "$COK - yay was located, moving on."
+ISPARU=/sbin/paru
+if [ -f "$ISPARU" ]; then 
+    echo -e "$COK - paru was located, moving on."
 else 
-    echo -e "$CWR - Yay was NOT located.. yay is (still) required"
-    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install yay (y,n) ' INSTYAY
-    if [[ $INSTYAY == "Y" || $INSTYAY == "y" ]]; then
-        git clone https://aur.archlinux.org/yay-git.git &>> $INSTLOG
-        cd yay-git
+    echo -e "$CWR - Paru was NOT located.. paru is (still) required"
+    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install paru (y,n) ' INSTPARU
+    if [[ $INSTPARU == "Y" || $INSTPARU == "y" ]]; then
+        git clone https://aur.archlinux.org/paru-git.git &>> $INSTLOG
+        cd paru-git
         makepkg -si --noconfirm &>> ../$INSTLOG
         cd ..
     else
-        echo -e "$CER - Yay is (still) required for this script, now exiting"
+        echo -e "$CER - Paru is (still) required for this script, now exiting"
         exit
     fi
-    # update the yay database
-    echo -e "$CNT - Updating the yay database..."
-    yay -Suy --noconfirm &>> $INSTLOG
+    # update the paru database
+    echo -e "$CNT - Updating the paru database..."
+    paru -Suy --noconfirm &>> $INSTLOG
 fi
 
 # function that will test for a package and if not found it will attempt to install it
 install_software() {
     # First lets see if the package is there
-    if yay -Q $1 &>> /dev/null ; then
+    if paru -Q $1 &>> /dev/null ; then
         echo -e "$COK - $1 is already installed."
     else
         # no package found so installing
         echo -e "$CNT - Now installing $1 ..."
-        yay -S --noconfirm $1 &>> $INSTLOG
+        paru -S --noconfirm $1 &>> $INSTLOG
         # test to make sure package installed
-        if yay -Q $1 &>> /dev/null ; then
+        if paru -Q $1 &>> /dev/null ; then
             echo -e "\e[1A\e[K$COK - $1 was installed."
         else
             # if this is hit then a package is missing, exit to review log
@@ -210,7 +210,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     
     # Clean out other portals
     echo -e "$CNT - Cleaning out conflicting xdg portals..."
-    yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
+    paru -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
 fi
 
 ### Copy Config Files ###
