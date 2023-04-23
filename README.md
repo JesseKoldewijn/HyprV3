@@ -1,5 +1,7 @@
 # HyprV3
 
+> Warning: this script might not work as expected due to the convert to paru. I'm working on this convert but its not there yet for a stable use.
+
 This is V3 of the Hyprland install script
 
 collection of dot config files for hyprland with a simple install script for a fresh Arch linux with paru
